@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Google_Photos_Import
+ * @package Google_Photos_Importer
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );

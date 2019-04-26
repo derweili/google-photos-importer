@@ -1,4 +1,4 @@
-=== Google Photos Import ===
+=== Google Photos Importer ===
 Contributors: derweili
 Donate link: https://derweili.de
 Tags: comments, spam

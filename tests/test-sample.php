@@ -2,7 +2,7 @@
 /**
  * Class SampleTest
  *
- * @package Google_Photos_Import
+ * @package Google_Photos_Importer
  */
 
 /**
