@@ -1,10 +1,9 @@
 <?php
 /**
- * Plugin Name:     Google Photos Import
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          YOUR NAME HERE
- * Author URI:      YOUR SITE HERE
+ * Plugin Name:     Google Photos Importer
+ * Description:     Import Media from Google Photos
+ * Author:          derweili
+ * Author URI:      https://www.derweili.de
  * Text Domain:     google-photos-import
  * Domain Path:     /languages
  * Version:         0.1.0
@@ -16,7 +15,7 @@
 /**
  *
  */
-class Google_Photos_Importer
+class Google_Photos_Importer_Plugin
 {
 
   public static $plugin_dir;
@@ -24,7 +23,7 @@ class Google_Photos_Importer
 
   function __construct()
   {
-    Google_Photos_Importer::$plugin_dir = __DIR__;
+    Google_Photos_Importer_Plugin::$plugin_dir = __DIR__;
   }
 
   function run(){
@@ -38,12 +37,12 @@ class Google_Photos_Importer
 
 
   private function load_dependencies(){
-    include_once Google_Photos_Importer::$plugin_dir . '/vendor/autoload.php';
-    include_once Google_Photos_Importer::$plugin_dir . '/inc/google-photos-authenticator.php';
-    include_once Google_Photos_Importer::$plugin_dir . '/inc/google-photos-connector.php';
-    include_once Google_Photos_Importer::$plugin_dir . '/inc/google-photos-importer.php';
-    include_once Google_Photos_Importer::$plugin_dir . '/admin/google-photos-settings-page.php';
-    include_once Google_Photos_Importer::$plugin_dir . '/admin/google-photos-importer-page.php';
+    include_once Google_Photos_Importer_Plugin::$plugin_dir . '/vendor/autoload.php';
+    include_once Google_Photos_Importer_Plugin::$plugin_dir . '/inc/google-photos-authenticator.php';
+    include_once Google_Photos_Importer_Plugin::$plugin_dir . '/inc/google-photos-connector.php';
+    include_once Google_Photos_Importer_Plugin::$plugin_dir . '/inc/google-photos-importer.php';
+    include_once Google_Photos_Importer_Plugin::$plugin_dir . '/admin/google-photos-settings-page.php';
+    include_once Google_Photos_Importer_Plugin::$plugin_dir . '/admin/google-photos-importer-page.php';
   }
 
   function register_settings_page(){
@@ -52,17 +51,17 @@ class Google_Photos_Importer
     add_action('admin_menu', array( $settings_page, 'add_menu_page') );
     add_action('admin_init', array( $settings_page, 'settings_init') );
 
-    $importer_page = new Google_Photos_Importerer_Page();
+    $importer_page = new Google_Photos_Importer_Page();
     add_action('admin_menu', array( $importer_page, 'add_menu_page') );
     add_action('admin_head', array( $importer_page, 'styles') );
     add_action('admin_footer', array( $importer_page, 'custom_admin_script') );
 
-    $importer = new Google_Photos_Importerer();
+    $importer = new Google_Photos_Importer();
     add_action('init', array( $importer, 'register_ajax_importer') );
   }
 
 
 }
 
-$Google_Photos_Importer = new Google_Photos_Importer();
+$Google_Photos_Importer = new Google_Photos_Importer_Plugin();
 $Google_Photos_Importer->run();
