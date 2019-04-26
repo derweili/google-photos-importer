@@ -121,8 +121,12 @@ class Google_Photos_Settings_Page
       $this->handle_redirect_callback($authenticator); // handle redirect callback
     }else{
       $auth_uri = $authenticator->get_authorization_uri(); // get auth uri
-      if($auth_uri)
-      echo '<a href="' . $auth_uri . '" class="button button-primary">Authenticate with Google</a>'; // render button
+      if($auth_uri){
+        echo '<h2>Authenticate with Google</h2>';
+        echo '<a href="' . $auth_uri . '" >'; // render button
+          echo '<img src="' . Google_Photos_Importer_Plugin::$plugin_url .  '/assets/images/google-login-button/btn_google_signin_dark_normal_web@2x.png" width="191"/>';
+        echo '</a>'; // render button
+      }
     }
 
   }

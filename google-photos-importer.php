@@ -24,6 +24,7 @@ class Google_Photos_Importer_Plugin
   function __construct()
   {
     Google_Photos_Importer_Plugin::$plugin_dir = __DIR__;
+    Google_Photos_Importer_Plugin::$plugin_url =  plugin_dir_url( __FILE__ );
   }
 
   function run(){

@@ -82,7 +82,7 @@ class Google_Photos_Importer_Page
         foreach ($albums as $album ) {
           $output .= '<li>';
             $output .= '<a href="' . menu_page_url( Google_Photos_Importer_Page::$menu_slug, false ) . '&album_id=' . $album->getId() . '">';
-              $output .= '<img src="' . $album->getCoverPhotoBaseUrl('=w2048-h1024') . '" " width="200px"/>';
+              $output .= '<img src="' . $album->getCoverPhotoBaseUrl() . '=w200-h140-c" width="200px"/>';
               $output .= '<span>' . $album->getTitle() . '</span>';
             $output .= '</a>';
           $output .= '</li>';
@@ -153,6 +153,17 @@ class Google_Photos_Importer_Page
       margin: 10px;
       width: 200px;
     }
+
+    @media screen and (max-width: 768px){
+      .google-photos-importer-album-list li {
+        width: calc(33% - 30px)
+      }
+    }
+    @media screen and (max-width: 425px){
+      .google-photos-importer-album-list li {
+        width: calc(50% - 30px)
+      }
+    }
     .google-photos-importer-album-list li a {
       display: flex;
       flex-direction: column;
@@ -196,6 +207,8 @@ class Google_Photos_Importer_Page
     }
     .google-photos-importer-album-list img {
       margin-bottom: 10px;
+      max-width: 100%;
+      width: 100%;
     }
     </style><?php
   }
