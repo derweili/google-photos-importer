@@ -71,40 +71,60 @@ class Google_Photos_Importer_Page
 
 
   function show_album_list(){
-    $albumns = $this->google_photos_connector->list_albums();
-    echo '<h1>Select Album</h1>';
-    echo '<ul class="google-photos-importer-album-list">';
-      foreach ($albumns as $album ) {
-        echo '<li>';
-          echo '<a href="' . menu_page_url( Google_Photos_Importer_Page::$menu_slug, false ) . '&album_id=' . $album->getId() . '">';
-            echo '<img src="' . $album->getCoverPhotoBaseUrl('=w2048-h1024') . '" " width="200px"/>';
-            echo '<span>' . $album->getTitle() . '</span>';
-          echo '</a>';
-        echo '</li>';
 
-      }
-    echo '</ul>';
+    if ( false === ( $output = get_transient( 'googe-photos-importer-page-albumns-list' ) ) ) {
+      $albums = $this->google_photos_connector->list_albums();
+
+      $output = '';
+
+      $output .= '<h1>Select Album</h1>';
+      $output .= '<ul class="google-photos-importer-album-list">';
+        foreach ($albums as $album ) {
+          $output .= '<li>';
+            $output .= '<a href="' . menu_page_url( Google_Photos_Importer_Page::$menu_slug, false ) . '&album_id=' . $album->getId() . '">';
+              $output .= '<img src="' . $album->getCoverPhotoBaseUrl('=w2048-h1024') . '" " width="200px"/>';
+              $output .= '<span>' . $album->getTitle() . '</span>';
+            $output .= '</a>';
+          $output .= '</li>';
+
+        }
+      $output .= '</ul>';
+      set_transient( 'googe-photos-importer-page-albumns-list', $output, 2 * MINUTE_IN_SECONDS );
+
+   }
+   echo $output;
+
   }
 
 
   function show_album($album_id){
-    $media = $this->google_photos_connector->list_album_media($album_id);
-    echo '<h1>Import Image</h1>';
-    echo '<ul class="google-photos-importer-album-list images">';
-      foreach ($media as $element) {
-        echo '<li>';
-          echo '<a
-                  href="#"
-                  class="google-photos-media-file"
-                  data-id="' . $element->getId() . '"
-                  data-uri="' . $element->getBaseUrl('=w200-h200') . '"
-                  >';
-            echo '<img src="' . $element->getBaseUrl() . '=w200-h140-c"" width="200px"/>';
-            echo '<span>' . $element->getFilename() . '</span>';
-          echo '</a>';
-        echo '</li>';
-      }
-    echo '</ul>';
+
+    if ( false === ( $output = get_transient( 'googe-photos-importer-page-show-album-' . $album_id ) ) ) {
+
+      $media = $this->google_photos_connector->list_album_media($album_id);
+      $output = '';
+      $output .= '<h1>Import Image</h1>';
+      $output .= '<ul class="google-photos-importer-album-list images">';
+        foreach ($media as $element) {
+          $output .= '<li>';
+            $output .= '<a
+                    href="#"
+                    class="google-photos-media-file"
+                    data-id="' . $element->getId() . '"
+                    data-uri="' . $element->getBaseUrl('=w200-h200') . '"
+                    >';
+              $output .= '<img src="' . $element->getBaseUrl() . '=w200-h140-c"" width="200px"/>';
+              $output .= '<span>' . $element->getFilename() . '</span>';
+            $output .= '</a>';
+          $output .= '</li>';
+        }
+      $output .= '</ul>';
+
+      set_transient( 'googe-photos-importer-page-show-album-' . $album_id, $output, 2 * MINUTE_IN_SECONDS );
+    }
+
+    echo $output;
+
   }
 
 

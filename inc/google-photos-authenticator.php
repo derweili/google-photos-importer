@@ -103,6 +103,9 @@ class Google_Photos_Authenticator
 
     $this->save_credentials_object_to_database($credentials_object);
 
+    // delte cached albumns
+    delete_transient( 'googe-photos-importer-page-albumns-list' );
+
     return $credentials_object;
 
   }
