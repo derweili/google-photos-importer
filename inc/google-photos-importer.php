@@ -24,7 +24,7 @@ class Google_Photos_Importer
       }
 
       $id = sanitize_text_field( $_POST["fileId"] );
-      $image_id = $this->importImage($id);
+      $image_id = $this->importMedia($id);
 
       $responseData = array(
         'image_id' => $image_id
@@ -35,11 +35,11 @@ class Google_Photos_Importer
 
 
 
-  function importImage( $id ){
+  function importMedia( $id ){
 
-    $image = $this->get_image( $id );
+    $image = $this->get_media( $id );
 
-    $image_url = $image->getBaseUrl() . '=d';
+    $image_url = $this->get_media_download_url($image);
     $image_name = $image->getFilename();
     $image_description = $image->getDescription();
     $upload_dir       = wp_upload_dir(); // Set upload folder
@@ -87,7 +87,7 @@ class Google_Photos_Importer
 
   }
 
-  function get_image( $id ){
+  function get_media( $id ){
 
     $connector = new Google_Photos_Connector();
     $item = $connector->getMedia($id);
@@ -96,7 +96,30 @@ class Google_Photos_Importer
 
   }
 
+  /**
+   * helper method to get the origintal file url
+   * filters url based on mimetype
+   *
+   * @see https://developers.google.com/photos/library/guides/access-media-items#base-urls
+   */
+  function get_media_download_url( $image ){
+    // get media mimetype
+    $mime_type = $image->getMimeType();
 
+    // get url for images
+    if(strpos($mime_type, 'image') !== false){
+      return $image->getBaseUrl() . '=d';
+    }
+
+    // get url for videos
+    if(strpos($mime_type, 'video') !== false){
+      return $image->getBaseUrl() . '=dv';
+    }
+
+    // fallback
+    return $image->getBaseUrl();
+
+  }
 
 
 }
