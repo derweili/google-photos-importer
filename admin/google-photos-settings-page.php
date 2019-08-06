@@ -28,7 +28,7 @@ class Google_Photos_Settings_Page
     ?>
       <div class="wrap">
         <?php screen_icon(); ?>
-        <h2>My Plugin Page Title</h2>
+        <h2>Google Photos Settings</h2>
         <?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
           <!-- <div class="updated fade">
           	<p><strong>Settings Saved</strong></p>

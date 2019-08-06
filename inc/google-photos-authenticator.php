@@ -66,7 +66,7 @@ class Google_Photos_Authenticator
    * Return required scope for OAuth2 authentication;
    */
   public function get_scopes(){
-    return apply_filters( 'google-photos-import-authentication-scope', ['https://www.googleapis.com/auth/photoslibrary'] );
+    return apply_filters( 'google-photos-import-authentication-scope', ['https://www.googleapis.com/auth/photoslibrary.readonly'] );
   }
 
   /**
